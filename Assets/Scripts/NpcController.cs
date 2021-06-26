@@ -21,7 +21,7 @@ public class NpcController : MonoBehaviour
     void Update()
     {
         CheckSurroundings();
-        MoveNpc(true);
+        MoveNpc(isAlive);
     }
 
     private void CheckSurroundings()
