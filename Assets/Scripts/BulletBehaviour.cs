@@ -24,6 +24,14 @@ public class BulletBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.tag == "KillableNpc")
+        {
+            Debug.Log("hit" + other.name);
+            other.GetComponentInChildren<Animator>().SetBool("isWalking", false);
+            other.GetComponentInChildren<Animator>().SetBool("isDead", true);
+           
+            
+        }
         GameObject instantiatedObj = (GameObject)Instantiate(hitFX, this.gameObject.transform.position, this.gameObject.transform.rotation);
         Destroy(instantiatedObj, 1.0f);
 
