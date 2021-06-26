@@ -29,11 +29,13 @@ public class BulletBehaviour : MonoBehaviour
             Debug.Log("hit" + other.name);
             other.GetComponentInChildren<Animator>().SetBool("isWalking", false);
             other.GetComponentInChildren<Animator>().SetBool("isDead", true);
-           
-            
+            other.GetComponent<NpcController>().npcIsAlive = false;
+            GameObject instantiatedObj = (GameObject)Instantiate(hitFX, this.gameObject.transform.position, this.gameObject.transform.rotation);
+            Destroy(instantiatedObj, 1.0f);
+            other.GetComponent<Rigidbody>().isKinematic = true;
+            other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         }
-        GameObject instantiatedObj = (GameObject)Instantiate(hitFX, this.gameObject.transform.position, this.gameObject.transform.rotation);
-        Destroy(instantiatedObj, 1.0f);
+        
 
         Destroy(this.gameObject);
 

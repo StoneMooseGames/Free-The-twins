@@ -6,7 +6,7 @@ public class NpcController : MonoBehaviour
 {
     public float walkingSpeed = 1.0f;
     private Animator npcAnimator;
-    public bool isAlive;
+    public bool npcIsAlive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -14,28 +14,24 @@ public class NpcController : MonoBehaviour
         
         npcAnimator = this.gameObject.GetComponentInChildren<Animator>();
         npcAnimator.SetBool("isWalking", true);
-        isAlive = true;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckSurroundings();
-        MoveNpc(isAlive);
-    }
-
-    private void CheckSurroundings()
-    {
-
-    }
-
-    private void MoveNpc(bool isAlive)
-    {
-        while(isAlive)
+       
+        if (npcIsAlive)
         {
-            transform.Translate(Vector3.forward * walkingSpeed * Time.deltaTime);
+            MoveNpc();
         }
        
+    }
+
+    private void MoveNpc()
+    {
+        transform.Translate(Vector3.forward * walkingSpeed * Time.deltaTime);
+     
     }
 
 }
