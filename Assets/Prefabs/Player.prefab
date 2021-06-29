@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 50
   bullet: {fileID: -1810295389637229673, guid: 7b2c5db3b13a3f54e97ee0b917347e0c, type: 3}
+  player: {fileID: 5353571844739612758}
 --- !u!1001 &5352626681292637962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,6 +153,12 @@ PrefabInstance:
     - {fileID: 6460139434888755226, guid: 867b8d2eced67404186c5652491aa961, type: 3}
     - {fileID: 6460287620219012288, guid: 867b8d2eced67404186c5652491aa961, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 867b8d2eced67404186c5652491aa961, type: 3}
+--- !u!1 &5353571844739612758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1104601239848796, guid: 867b8d2eced67404186c5652491aa961,
+    type: 3}
+  m_PrefabInstance: {fileID: 5352626681292637962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5352456063063692966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4477165101240748, guid: 867b8d2eced67404186c5652491aa961,
