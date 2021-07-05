@@ -24,6 +24,8 @@ public class NpcController : MonoBehaviour
     public Rigidbody bullet;
     private float shootTimer;
 
+    public int enemyID;
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +56,7 @@ public class NpcController : MonoBehaviour
                 if (isShooting)
                 {
                     transform.LookAt(GameObject.FindGameObjectWithTag("playerController").transform.position);
-                    Debug.Log("looking at player: " + GameObject.FindGameObjectWithTag("playerController").transform.position);
+                    //Debug.Log("looking at player: " + GameObject.FindGameObjectWithTag("playerController").transform.position);
                     shooting();
                 }
                 if (!isPatrolling && !isShooting)
@@ -153,13 +155,18 @@ public class NpcController : MonoBehaviour
         {
             npcIsAlive = false;
             KillNpc();
+            if(this.gameObject.GetComponent<QuestGiver>())
+            {
+                this.gameObject.GetComponent<QuestGiver>().GiveQuest();
+            }
         }
     }
 
     void KillNpc()
     {
+        EventController.EnemyDied(enemyID);
         npcAnimator.speed = 3;
-        Debug.Log("hit" + gameObject.name);
+        //Debug.Log("hit" + gameObject.name);
         GetComponentInChildren<Animator>().SetBool("isShooting", false);
         GetComponentInChildren<Animator>().SetBool("isWalking", false);
         GetComponentInChildren<Animator>().SetBool("isDead", true);
@@ -169,5 +176,7 @@ public class NpcController : MonoBehaviour
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
         Destroy(gameObject, 10.0f);
     }
+
+    
 }
 

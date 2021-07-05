@@ -9,6 +9,7 @@ TagManager:
   - KillableNpc
   - playerController
   - OpenClose
+  - MissionWindow
   layers:
   - Default
   - TransparentFX

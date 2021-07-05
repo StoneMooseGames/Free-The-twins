@@ -83,6 +83,11 @@ MonoBehaviour:
   moveSpots: []
   startWaitTime: 2
   isIdle: 0
+  isShooting: 0
+  isAlerted: 0
+  npcHealthMax: 0
+  bullet: {fileID: 0}
+  enemyID: 5
 --- !u!195 &-3479915459966805679
 NavMeshAgent:
   m_ObjectHideFlags: 0

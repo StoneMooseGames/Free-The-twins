@@ -16,6 +16,7 @@ public class PlayerCharacterController : MonoBehaviour
     private GameObject gameUi;
     private Text healthUiText;
     private float shootingTimer;
+    public float shootingIntervall = 0.0f;
 
     public int playerHealthMax = 200;
     private int playerHealth;
@@ -28,7 +29,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         soundPlayer = GetComponent<AudioSource>();
         soundPlayer.loop = false;
-        shootingTimer = 1.0f;
+        shootingTimer = shootingIntervall;
         playerHealth = playerHealthMax;
         gameUi = GameObject.Find("UI");
         healthUiText = gameUi.GetComponent<GameUiManager>().healthText.GetComponent<Text>();
@@ -50,13 +51,16 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void FireWeapon()
     {
-        if(Input.GetMouseButtonDown(0))
+        shootingTimer -= Time.deltaTime;
+        if (Input.GetMouseButtonDown(0))
         {
             soundPlayer.clip = shootSound;
-            if(!soundPlayer.isPlaying)
+            
+            if(shootingTimer <= 0)
             {
                 soundPlayer.Play();
                 bulletClone = Instantiate(bullet, weapon2.transform.position, weapon2.transform.rotation);
+                shootingTimer = shootingIntervall;
             }
                 
             
@@ -65,10 +69,12 @@ public class PlayerCharacterController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             soundPlayer.clip = shootSound;
-            if (!soundPlayer.isPlaying)
+            
+            if (shootingTimer <= 0)
             {
                 soundPlayer.Play();
                 bulletClone = Instantiate(bullet, weapon1.transform.position, weapon1.transform.rotation);
+                shootingTimer = shootingIntervall;
             }
         }
     }
@@ -88,6 +94,10 @@ public class PlayerCharacterController : MonoBehaviour
                 if (Input.GetKeyDown("e"))
                 {
                     hit.collider.gameObject.GetComponent<OpenCloseDoor>().InteractWithDoor();
+                    if(hit.collider.GetComponent<Item>())
+                    {
+                        hit.collider.GetComponent<Item>().Get();
+                    }
                 }
             }
             else gameUi.GetComponent<GameUiManager>().interActText.gameObject.GetComponent<Text>().enabled = false;
@@ -103,4 +113,6 @@ public class PlayerCharacterController : MonoBehaviour
             Debug.Log("Player is dead");
         }
     }
+
+   
 }

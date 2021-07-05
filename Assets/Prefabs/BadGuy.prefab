@@ -53,6 +53,11 @@ MonoBehaviour:
   moveSpots: []
   startWaitTime: 2
   isIdle: 0
+  isShooting: 0
+  isAlerted: 0
+  npcHealthMax: 0
+  bullet: {fileID: 0}
+  enemyID: 1
 --- !u!54 &623413272
 Rigidbody:
   m_ObjectHideFlags: 0
