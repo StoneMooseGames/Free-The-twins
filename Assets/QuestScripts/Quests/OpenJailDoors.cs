@@ -20,6 +20,7 @@ public class OpenJailDoors : Quest
 
     public override void Complete()
     {
+        AdditionalParameters();
         if(hasFollowUp)
         {
            GameObject questController = GameObject.Find("QuestController");
@@ -28,5 +29,10 @@ public class OpenJailDoors : Quest
         }
         base.Complete();
 
+    }
+
+    void AdditionalParameters()
+    {
+        //Additional Parameters
     }
 }

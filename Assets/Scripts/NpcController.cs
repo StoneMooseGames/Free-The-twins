@@ -155,15 +155,13 @@ public class NpcController : MonoBehaviour
         {
             npcIsAlive = false;
             KillNpc();
-            if(this.gameObject.GetComponent<QuestGiver>())
-            {
-                this.gameObject.GetComponent<QuestGiver>().GiveQuest();
-            }
+           
         }
     }
 
     void KillNpc()
     {
+        
         EventController.EnemyDied(enemyID);
         npcAnimator.speed = 3;
         //Debug.Log("hit" + gameObject.name);
@@ -177,6 +175,9 @@ public class NpcController : MonoBehaviour
         Destroy(gameObject, 10.0f);
     }
 
-    
+    public void SetAlertedState(bool state)
+    {
+        isAlerted = state;
+    }
 }
 

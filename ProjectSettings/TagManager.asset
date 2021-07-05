@@ -10,6 +10,8 @@ TagManager:
   - playerController
   - OpenClose
   - MissionWindow
+  - aggressiveNPC
+  - sheriffsMen
   layers:
   - Default
   - TransparentFX
