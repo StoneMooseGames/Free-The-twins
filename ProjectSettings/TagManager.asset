@@ -12,6 +12,7 @@ TagManager:
   - MissionWindow
   - aggressiveNPC
   - sheriffsMen
+  - GameUIManager
   layers:
   - Default
   - TransparentFX

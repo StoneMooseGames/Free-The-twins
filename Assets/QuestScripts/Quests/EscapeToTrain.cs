@@ -17,6 +17,9 @@ public class EscapeToTrain : Quest
 
     public override void Complete()
     {
+        Destroy(GameObject.Find("MusicPlayer"));
+        Destroy(GameObject.Find("SceneLoader"));
+        
         base.Complete();
 
     }

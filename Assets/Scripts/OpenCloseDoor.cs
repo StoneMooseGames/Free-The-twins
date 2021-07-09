@@ -5,35 +5,24 @@ using UnityEngine;
 public class OpenCloseDoor : MonoBehaviour
 {
     private Animator openCloseDoor;
-    private bool isOpen;
+    public bool isOpen;
     
     // Start is called before the first frame update
     void Start()
     {
-        isOpen = false;
-        openCloseDoor = GetComponent<Animator>();
-        gameObject.tag = "OpenClose";
+        this.gameObject.tag = "OpenClose";
+       
+        openCloseDoor = gameObject.GetComponent<Animator>();
+        InteractWithDoor(isOpen);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void InteractWithDoor()
+    public void InteractWithDoor(bool isDoorOpen)
     {
-        if(isOpen)
-        {
-            openCloseDoor.SetTrigger("closeDoor");
-            isOpen = false;
-        }
-        else
-        {
-            openCloseDoor.SetTrigger("openDoor");
-            isOpen = true;
-        }
- 
+        Debug.Log(isDoorOpen);
+        openCloseDoor.SetBool("isOpen", isDoorOpen);
+    
     }
 
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacterController : MonoBehaviour
 {
@@ -23,10 +24,12 @@ public class PlayerCharacterController : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip reloadSound;
     AudioSource soundPlayer;
+    public bool isPaused;
 
     // Start is called before the first frame update
     void Start()
     {
+        isPaused = false;
         soundPlayer = GetComponent<AudioSource>();
         soundPlayer.loop = false;
         shootingTimer = shootingIntervall;
@@ -52,7 +55,7 @@ public class PlayerCharacterController : MonoBehaviour
     private void FireWeapon()
     {
         shootingTimer -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isPaused)
         {
             soundPlayer.clip = shootSound;
             
@@ -66,7 +69,7 @@ public class PlayerCharacterController : MonoBehaviour
             
             
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isPaused)
         {
             soundPlayer.clip = shootSound;
             
@@ -93,7 +96,8 @@ public class PlayerCharacterController : MonoBehaviour
                 gameUi.GetComponent<GameUiManager>().interActText.gameObject.GetComponent<Text>().enabled = true;
                 if (Input.GetKeyDown("e"))
                 {
-                    hit.collider.gameObject.GetComponent<OpenCloseDoor>().InteractWithDoor();
+                    bool isDoorOpen = hit.collider.gameObject.GetComponent<OpenCloseDoor>().isOpen;
+                    hit.collider.gameObject.GetComponent<OpenCloseDoor>().InteractWithDoor(!isDoorOpen);
                     if(hit.collider.GetComponent<Item>())
                     {
                         hit.collider.GetComponent<Item>().Get();
@@ -110,7 +114,17 @@ public class PlayerCharacterController : MonoBehaviour
         healthUiText.text = playerHealth.ToString();
         if(playerHealth <=0)
         {
-            Debug.Log("Player is dead");
+            GameObject.FindGameObjectWithTag("GameUIManager").GetComponent<GameUiManager>().youDied.gameObject.SetActive(true);
+            
+            GameObject.FindGameObjectWithTag("playerController").GetComponent<ECM.Components.MouseLook>().lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameObject.FindGameObjectWithTag("playerController").GetComponent<ECM.Components.MouseLook>().verticalSensitivity = 0;
+            GameObject.FindGameObjectWithTag("playerController").GetComponent<ECM.Components.MouseLook>().lateralSensitivity = 0;
+
+            Time.timeScale = 0f;
+            Debug.Log("Player died");
+            
         }
     }
 

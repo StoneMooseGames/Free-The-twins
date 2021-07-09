@@ -37,4 +37,10 @@ public class MusicManager : MonoBehaviour
 
         return musicPlayer.clip;
     }
+
+    public void removeDontDestoyOnLoad()
+    {
+        Destroy(GameObject.Find("MusicPlayer"));
+        Destroy(GameObject.Find("SceneLoader"));
+    }
 }

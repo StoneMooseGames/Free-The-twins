@@ -23,15 +23,18 @@ public class NpcController : MonoBehaviour
     private Rigidbody bulletClone;
     public Rigidbody bullet;
     private float shootTimer;
-
+    private GameObject player;
     public int enemyID;
+    private GameObject[] sheriffsMen;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("playerController");
         bullet = GameObject.Find("Environment").GetComponent<Environment>().useablePrefabs[0].gameObject.GetComponent<Rigidbody>();
-        
+        sheriffsMen = GameObject.Find("Environment").GetComponent<Environment>().sheriffsMen;
         npcHealthMax = 200;
         agent = GetComponent<NavMeshAgent>();
         npcAnimator = this.gameObject.GetComponentInChildren<Animator>();
@@ -46,10 +49,14 @@ public class NpcController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!npcIsAlive) KillNpc();
         if (npcIsAlive)
         {
-            if (isAlerted) isShooting = true;
+            if (isAlerted)
+            {
+                Chase();
+            }
             
             if(!isIdle)
             {
@@ -59,7 +66,7 @@ public class NpcController : MonoBehaviour
                     //Debug.Log("looking at player: " + GameObject.FindGameObjectWithTag("playerController").transform.position);
                     shooting();
                 }
-                if (!isPatrolling && !isShooting)
+                if (!isPatrolling && !isShooting && !isAlerted)
                 {
                     float dist = GetComponent<NavMeshAgent>().remainingDistance;
                     if (dist != Mathf.Infinity && GetComponent<NavMeshAgent>().pathStatus == NavMeshPathStatus.PathComplete && GetComponent<NavMeshAgent>().remainingDistance == 0)//Arrived.
@@ -118,8 +125,26 @@ public class NpcController : MonoBehaviour
         }
   
     }
+
+    void Chase()
+    {
+        npcAnimator.SetBool("isWalking", false);
+        npcAnimator.SetBool("isRunning", true);
+        isPatrolling = false;
+        agent.speed = walkingSpeed * 3;
+        
+        float shootingRange = 5f;
+        FindTarget();
+        SetAlertedState(true);
+        if (Vector3.Distance(transform.position, player.transform.position) < shootingRange)
+            {
+            transform.LookAt(GameObject.FindGameObjectWithTag("playerController").transform.position);
+            shooting();
+            }
+    }
     void shooting()
     {
+        
         npcAnimator.speed = 3;
         GetComponent<NavMeshAgent>().destination = transform.position;
         shootTimer -= Time.deltaTime;
@@ -178,6 +203,19 @@ public class NpcController : MonoBehaviour
     public void SetAlertedState(bool state)
     {
         isAlerted = state;
+        
     }
+
+    public void FindTarget()
+    {
+        float targetRange = 50f;
+        if(Vector3.Distance(transform.position,player.transform.position) < targetRange)
+        {
+            GetComponent<NavMeshAgent>().destination = Vector3.MoveTowards(transform.position,player.transform.position,walkingSpeed * 2);
+            
+        }
+    }
+
+   
 }
 

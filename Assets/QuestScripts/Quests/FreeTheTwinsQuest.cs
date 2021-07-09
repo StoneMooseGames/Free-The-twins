@@ -7,6 +7,7 @@ public class FreeTheTwinsQuest : Quest
 
     private bool hasFollowUp = true;
     private string followUpQuestName = "OpenJailDoors";
+    GameObject[] sheriffsMen;
 
     void Awake()
     {
@@ -14,7 +15,7 @@ public class FreeTheTwinsQuest : Quest
         description = "Kill The Sheriff";
         itemRewards = new List<string>() { "200£", "Binoculars" };
         goal = new KillGoal(1, 0, this);
-
+        sheriffsMen = GameObject.Find("Environment").GetComponent<Environment>().sheriffsMen;
         
     }
 
@@ -25,7 +26,7 @@ public class FreeTheTwinsQuest : Quest
         {
             GameObject questController = GameObject.Find("QuestController");
             questController.GetComponent<QuestController>().AssignQuest(followUpQuestName);
-
+            
         }
         base.Complete();
        
@@ -35,10 +36,15 @@ public class FreeTheTwinsQuest : Quest
     void AdditionalParameters()
     {
         Debug.Log("Setting additional parameters");
-        List<GameObject> sheriffsMen = GameObject.FindGameObjectWithTag("sheriffsMen").gameObject.GetComponent<SheriffsMen>().sheriffsMen;
-        foreach(GameObject cowboy in sheriffsMen)
-        {
-            cowboy.GetComponent<NpcController>().SetAlertedState(true);
-        }
+        SetAllCowboysAlerted();
+       
     }
+
+     public void SetAllCowboysAlerted()
+        {
+            foreach (GameObject sheriffsMan in sheriffsMen)
+            {
+                sheriffsMan.GetComponent<NpcController>().SetAlertedState(true);
+            }
+        }
 }

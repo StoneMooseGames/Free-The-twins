@@ -5,20 +5,34 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject interActText;
+    public GameObject healthText;
+    public GameObject controllerPrefab;
+    public GameObject missionTextArea;
+    public GameObject youDied;
+    public GameObject paused;
+    public void Awake()
     {
         
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+       
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitGame()
     {
-        
+        Application.Quit();
     }
 
     public void LoadMainGame()
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    public void loadMainMenu()
+    {
+        SceneManager.LoadScene("StartUI");
+    }
+
+    
 }
